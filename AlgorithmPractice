@@ -1,0 +1,60 @@
+a = [-10, 8, 13, 26, 34, 57]
+n = 24
+
+#Assuming array is unsorted, quadratic
+def sum_pair1(arr, n):
+    for i in range(len(arr)):
+        for j in range(len(arr)):
+            if i != j:
+                if arr[i]+arr[j] == n:
+                    return True, i, j
+    return False
+
+#Assuming array is sorted, linearithmic
+def sum_pair2(arr, n):
+    for i in range(len(arr)):
+        comp = n-arr[i]
+        lower = 0
+        upper = len(arr)
+        while lower < upper:
+            x = lower + (upper - lower) // 2
+            val = arr[x]
+            if comp == val:
+                return True, i, x
+            elif comp > val:
+                if lower == x:   
+                    break        
+                lower = x
+            elif comp < val:
+                upper = x
+    return False
+
+#Assuming array is sorted, linear
+def sum_pair3(arr, n):
+    start = 0
+    end = len(arr)-1
+    while start!=end:
+        if arr[start]+arr[end]<n:
+            start+=1
+        elif arr[start]+arr[end]>n:
+            end-=1
+        else:
+            return True, start, end
+    return False
+
+
+#Assuming array is unsorted, linear 
+def sum_pair4(arr, n):
+    comps = []
+    for i in range(len(arr)):
+        comp = n-arr[i]
+        if arr[i] in comps:
+            return True, comps.index(arr[i]), i 
+        else:
+            comps.append(comp)
+    return False
+
+print(sum_pair1(a,n))
+print(sum_pair2(a,n))
+print(sum_pair3(a,n))
+print(sum_pair4(a,n))
