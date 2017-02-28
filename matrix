@@ -1,0 +1,93 @@
+from random import randint
+
+def populate_matrix(m,n):
+    matrix = []
+    for _ in range(m):
+        row = []
+        for _ in range(n):
+            row.append(randint(1,10))
+        matrix.append(row)
+    return matrix
+
+def print_matrix(matrix):
+    #if there is no result
+    if type(matrix) != type([]):
+        print("NA")
+    else:
+        for row in matrix:
+            for item in row:
+                print(item, end=" ")
+            #go to next line
+            print("")
+
+def calc_sum(mat_1, mat_2):
+    #if m and n of the two matrices are the same
+    if [len(mat_1), len(mat_1[0])] == [len(mat_2), len(mat_2[0])]:
+        result = []
+        for i in range(len(mat_1)):
+            row = []
+            for j in range(len(mat_1[0])):
+                row.append(mat_1[i][j] + mat_2[i][j])
+            result.append(row)
+        return result
+    else:
+        return "NA"
+
+def calc_product(mat_1,mat_2):
+    result = []
+    for i in range(len(mat_1)):
+        row = []
+        for j in range(len(mat_2[0])):
+            sums = 0
+            for k in range(len(mat_2)):
+                sums += mat_1[i][k] * mat_2[k][j]
+            row.append(sums)
+        result.append(row)
+    return result
+
+#main
+#initialize variables
+mat_sum = False
+mat_product = False
+
+#get input and validate for matrix 1
+print("Matrix 1")
+m1 = input("Enter m: ")
+while m1 not in "12345":
+    print("Cannot! Try again.")
+    m1 = input("Enter m: ")
+n1 = input("Enter n: ")
+while n1 not in "12345":
+    print("Cannot! Try again.")
+    n1 = input("Enter n: ")
+mat1 = populate_matrix(int(m1),int(n1))
+
+#get input and validate for matrix 2
+print("Matrix 2")
+m2 = input("Enter m: ")
+try:
+    if int(m2) == int(m1):
+        mat_sum = True
+    if int(m2) == int(n1):
+        mat_product = True
+except:
+    pass
+while not mat_sum and not mat_product:
+    print("Cannot! Try again.")
+    m2 = input("Enter m: ")    
+n2 = input("Enter n: ")
+while n2 not in "12345":
+    print("Cannot! Try again.")
+    n2 = input("Enter n: ")
+mat2 = populate_matrix(int(m2),int(n2))
+
+#print result
+print("")
+print("Matrix 1")
+print_matrix(mat1)
+print("Matrix 2")
+print_matrix(mat2)
+print("Sum")
+print_matrix(calc_sum(mat1,mat2))
+print("Product")
+print_matrix(calc_product(mat1,mat2))
