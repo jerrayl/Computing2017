@@ -5,33 +5,26 @@ def populate_matrix(m,n):
     for _ in range(m):
         row = []
         for _ in range(n):
-            row.append(randint(1,10))
+            #assume each element is an integer between 1 and 99
+            row.append(randint(1,99))
         matrix.append(row)
     return matrix
 
 def print_matrix(matrix):
-    #if there is no result
-    if type(matrix) != type([]):
-        print("NA")
-    else:
-        for row in matrix:
-            for item in row:
-                print(item, end=" ")
-            #go to next line
-            print("")
+    for row in matrix:
+        for item in row:
+            print(item, end=" ")
+        #go to next line
+        print("")
 
 def calc_sum(mat_1, mat_2):
-    #if m and n of the two matrices are the same
-    if [len(mat_1), len(mat_1[0])] == [len(mat_2), len(mat_2[0])]:
-        result = []
-        for i in range(len(mat_1)):
-            row = []
-            for j in range(len(mat_1[0])):
-                row.append(mat_1[i][j] + mat_2[i][j])
-            result.append(row)
-        return result
-    else:
-        return "NA"
+    result = []
+    for i in range(len(mat_1)):
+        row = []
+        for j in range(len(mat_1[0])):
+            row.append(mat_1[i][j] + mat_2[i][j])
+        result.append(row)
+    return result
 
 def calc_product(mat_1,mat_2):
     result = []
@@ -53,6 +46,7 @@ mat_product = False
 #get input and validate for matrix 1
 print("Matrix 1")
 m1 = input("Enter m: ")
+#m1 should be an integer between 1 and 5
 while m1 not in "12345":
     print("Cannot! Try again.")
     m1 = input("Enter m: ")
@@ -79,7 +73,13 @@ n2 = input("Enter n: ")
 while n2 not in "12345":
     print("Cannot! Try again.")
     n2 = input("Enter n: ")
+#both matrices must have same size to calculate sum
+if n2 != n1:
+    mat_sum = False
 mat2 = populate_matrix(int(m2),int(n2))
+
+
+
 
 #print result
 print("")
@@ -88,6 +88,12 @@ print_matrix(mat1)
 print("Matrix 2")
 print_matrix(mat2)
 print("Sum")
-print_matrix(calc_sum(mat1,mat2))
+if mat_sum:
+    print_matrix(calc_sum(mat1,mat2))
+else:
+    print("NA")
 print("Product")
-print_matrix(calc_product(mat1,mat2))
+if mat_product:
+    print_matrix(calc_product(mat1,mat2))
+else:
+    print("NA")
